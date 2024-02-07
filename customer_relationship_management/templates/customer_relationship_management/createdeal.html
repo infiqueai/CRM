@@ -1,0 +1,312 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CREATE DEAL</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Increase the size of the label and placeholder text */
+        table td label {
+            font-size: 40px; /* Adjust the font size as needed */
+        }
+
+        table td input::placeholder {
+            font-size: 16px; /* Adjust the font size as needed */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 14px 16px;
+            font-size: 18px;
+            transition: text-decoration 0.3s;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 100px;
+        }
+
+        /* Updated styles to remove table lines */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-spacing: 0;
+        }
+
+        table, th, td {
+            border: none;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Reduce gap between label and input field */
+        table td input {
+            margin-bottom: 10px;
+        }
+
+        /* Increase size of the Insert Record button */
+        input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 20px;
+        }
+        table td input, table td select {
+            width: 80%; /* Set the width as needed */
+            padding: 8px; /* Set the padding as needed */
+            box-sizing: border-box;}
+
+             /*--Ankit Added Css--*/
+             h1 {font-size: 20px;}
+             h1, h2, h3, h4, h5, h6 {font-family: "Poppins", sans-serif; margin-bottom: 10px; margin-top: 15px;}
+             .table-responsive { font-family: "Poppins", sans-serif; width: 100%; overflow-x: scroll;}
+             .table-responsive th, .table-responsive td {
+               border: 1px solid #eee;  padding: 10px 20px; font-size: 13px; min-width: 100px;
+             }
+             .table-responsive tr td form button[type=submit] { font-weight: bold; background-color: #333; font-size: 12px; width: 100px;
+               text-align: center; color: #fff; padding: 5px 10px; border-radius: 5px;}
+               .table-responsive table { border:0px;}
+            
+               .navbar, .header-bar { justify-content: space-between; display: flex;}
+               .navbar a, .header-bar a { font-weight: 600; font-size: 14px; font-family: "Poppins", sans-serif;}
+               .navbar { padding: 0;}
+            
+               .filter-dropdown button, .header-bar button { font-size: 13px; font-weight:600; font-family: "Poppins", sans-serif;}
+               .filter-dropdown .filter-dropdown-content { top: 44px;}
+               .filter-dropdown .filter-dropdown-content a { font-size: 13px;}
+    /*--Ankit Added Css--*/
+    table.information tr td:nth-child(1), table.information tr td:nth-child(3) { width: 150px;}
+   table.information tr td { font-family: "Poppins", sans-serif;}
+   table.information tr input { font-family: "Poppins", sans-serif; border:1px solid #999; border-radius:5px;}
+    .btn { background-color: #333; font-size: 13px; color: #fff; border-radius: 5px; padding: 5px 10px;}
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="navbar">
+    <a href="{% url 'customer_relationship_management:dashboard' %}">Dashboard</a>
+    <a href="{% url 'customer_relationship_management:lead' %}">Lead</a>
+    <a href="{% url 'customer_relationship_management:billing' %}">Billing</a>
+    <a href="{% url 'customer_relationship_management:deal' %}">Deals</a>
+    <a href="{% url 'customer_relationship_management:client' %}">Accounts</a>
+    <a href="{% url 'customer_relationship_management:contact' %}">Contact</a>
+    <a href="{% url 'customer_relationship_management:selling' %}">Sales Order</a>
+    <a href="{% url 'customer_relationship_management:to_do_list' %}">To Do List</a>
+    <a href="{% url 'customer_relationship_management:logout' %}?next={% url 'customer_relationship_management:login' %}" class="logout">Logout</a>
+</div>
+
+<div class="content">
+  <form method="POST" action="{% url 'customer_relationship_management:Dealrecord' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h1>Deal Information</h1>
+    <table class="information">
+      <tr>
+        <td>Deal Owner: </td>
+        <td>
+            <select name="dealowner" required>
+                <option value="arun_agarwal">Arun Agarwal</option>
+                <option value="jashuk_shah">Jashuk Shah</option>
+                <option value="sawan_jain">Sawan Jain</option>
+                <option value="mayank_sarda">Mayank Sarda</option>
+            </select><br/>
+        </td>
+        <td>Amount:</td>
+        <td><input type="text" placeholder="Enter Amount" name="amount" required/><br/></td>
+    </tr>
+      <tr>
+    <td>Deal Name:</td>
+    <td> <input type="text" placeholder="Enter Deal Name" name="dealname" required/><br/></td>
+    <td>Closing Date: </td>
+    <td><input type="text" placeholder="Enter Closing Date" name="closingdate" required/><br/></td>
+      </tr>
+      <tr>
+        <td>Account Name: </td>
+        <td> <input type="text" placeholder="Enter Account Name" name="accountname" required/><br/></td>
+        <td>Pipeline: </td>
+        <td>
+            <select name="pipeline" required>
+                <option value="investment">Investment</option>
+                <option value="accounting,taxation&compliance">Accounting,Taxation & Compliance</option>
+                <option value="companysetup">Company Setup</option>
+            </select><br/>
+        </td>
+    </tr>
+    <tr>
+        <td>Type: </td>
+        <td>
+            <select name="type" required>
+                <option value="none">None</option>
+                <option value="Existing Business">Existing Business</option>
+                <option value="New Business">New Business</option>
+            </select><br/>
+        </td>
+        <td>Stage:</td>
+        <td>
+            <select name="stage" required>
+                <option value="enquiry">Enquiry</option>
+                <option value="connected/spoken">Connected/Spoken</option>
+                <option value="meeting/demo">Meeting/Demo</option>
+                <option value="proposalsent">Proposal Sent</option>
+                <option value="firstfollowup">First Follow Up</option>
+                <option value="secondfollowup">Second follow Up</option>
+                <option value="delayed">Delayed</option>
+                <option value="closewon">Close Won</option>
+                <option value="closedwon">Closed Won</option>
+                <option value="closelost">Closed Lost</option>
+            </select><br/>
+        </td>
+    </tr>
+    <tr>
+        <td>Next Step:</td>
+        <td> <input type="text" placeholder="Enter Next Step" name="nextstep" required/><br/></td>
+        <td>Probability(%): </td>
+        <td><input type="text" placeholder="Enter Probability" name="probability" required/><br/></td>
+          </tr>
+          <tr>
+            <td>Lead Source:</td>
+            <td>
+                <select name="leadsource" required>
+                    <option value="none">None</option>
+                    <option value="advertisements">Advertisements</option>
+                    <option value="coldcall">Cold Call</option>
+                    <option value="employeereferral">Employee Referral</option>
+                    <option value="externalreferral">External Referral</option>
+                    <option value="onlinestore">Online Store</option>
+                    <option value="partner">Partner</option>
+                </select><br/>
+            </td>
+            <td>Expected Revenue: </td>
+            <td><input type="text" placeholder="Enter Expected Revenue" name="expectedrevenue" required/><br/></td>
+              </tr>
+              <tr>
+                <td>Contact Name:</td>
+                <td> <input type="text" placeholder="Enter Contact Name" name="contactname" required/><br/></td>
+                <td>Campaign Source: </td>
+                <td><input type="text" placeholder="Enter Campaign Source" name="campaignsource" required/><br/></td>
+                  </tr>
+                  <tr>
+                    <td>Project Delivered:</td>
+                    <td>
+                        <select name="projectdelivered" required>
+                            <option value="none">None</option>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                           
+                        </select><br/>
+                    </td>
+                    <td>Proposal Confirmed: </td>
+                    <td>
+                        <select name="proposalconfirmed" required>
+                            <option value="none">None</option>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select><br/>
+                    </td>
+                      </tr>
+                      <tr>
+                        <td>Close Lost Date:</td>
+                        <td> <input type="text" placeholder="Enter Close Lost Date" name="closelostdate" required/><br/></td>
+                        <td>Exchange Rate: </td>
+                        <td><input type="text" placeholder="Enter Exchange Rate" name="exchangerate" required/><br/></td>
+                          </tr>
+                          <tr>
+                            <td>Currency: </td>
+                            <td>
+                                <select name="currency" required>
+                                    <option value="aed">AED</option>
+                                </select><br/>
+                            </td>
+                        </tr>
+    </table>
+    <h1>Accounting,Taxation & Compliance</h1>
+    <table class="information">
+      <tr>
+        <td>Enquiry Date: </td>
+        <td><input type="text" placeholder="Enter Enquiry Date" name="enquirydate" required/><br/></td>
+        <td>Geography Of Operations:</td>
+        <td><input type="text" placeholder="Enter Geography Of Operations" name="geographyofoperations" required/><br/></td>
+    </tr>
+      <tr>
+    <td>Business Activity:</td>
+    <td> <input type="text" placeholder="Enter Business Activity" name="businessactivity" required/><br/></td>
+    <td>Number Of Offices: </td>
+    <td><input type="text" placeholder="Enter Number Of Offices" name="numberofoffices" required/><br/></td>
+      </tr>
+      <tr>
+        <td>Turnover:</td>
+        <td> <input type="text" placeholder="Enter Turnover" name="turnover" required/><br/></td>
+        <td>Number Of Employees: </td>
+        <td><input type="text" placeholder="Enter Number Of Employees" name="numberofemployees" required/><br/></td>
+          </tr>
+          <tr>
+            <td>Number Of Customers:</td>
+            <td> <input type="text" placeholder="Enter Number Of Customers" name="numberofcustomers" required/><br/></td>
+            <td>Meeting Date: </td>
+            <td><input type="text" placeholder="Enter Meeting Date" name="meetingdate" required/><br/></td>
+              </tr>
+      <tr>
+        <td>Services Looking For: </td>
+        <td>
+            <select name="serviceslookingfor" required>
+                <option value="none">None</option>
+                <option value="option1">Option1</option>
+                <option value="option2">Option2</option>
+            </select><br/>
+        </td>
+        <td>Meeting Status: </td>
+        <td>
+            <select name="meetingstatus" required>
+                <option value="none">Nonee</option>
+                <option value="conducted">Conducted</option>
+                <option value="not-conducted">Not-Conducted</option>
+            </select><br/>
+        </td>
+        <tr>
+            <td>Reason For Delayed: </td>
+            <td>
+                <select name="reasonfordelayed" required>
+                    <option value="none">None</option>
+                    <option value="noresponsefromclient">No Response From Client</option>
+                    <option value="other">Other</option>
+                </select><br/>
+            </td>
+            <td>Proposal Sent Date: </td>
+            <td><input type="text" placeholder="Enter Proposal Sent Date" name="proposalsentdate" required/><br/></td>
+    </tr>
+    <tr>
+        <td>First Follow-Up Date:</td>
+        <td> <input type="text" placeholder="Enter First Follow-Up Date" name="firstfollowupdate" required/><br/></td>
+        <td>Second Follow-Up Date: </td>
+        <td><input type="text" placeholder="Enter Second Follow-Up Date" name="secondfollowupdate" required/><br/></td>
+          </tr>
+    </table>
+    <h1>Description Information</h1>
+    <table class="information">
+      <tr>
+   <td> Description:</td>
+   <td> <input type="text" placeholder="Enter Description" name="description" required/><br/></td>
+      </tr>
+    </table>
+    <input class="btn" type="submit" value="Insert Record"/>
+</form>
+<hr/>
+</body>
+</html>

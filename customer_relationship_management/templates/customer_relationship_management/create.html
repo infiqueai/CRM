@@ -1,0 +1,319 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Lead</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 14px 16px;
+            font-size: 18px;
+            transition: text-decoration 0.3s;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 100px;
+        }
+
+        /* Updated styles to remove table lines */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-spacing: 0;
+        }
+
+        table, th, td {
+            border: none;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Reduce gap between label and input field */
+        table td input {
+            margin-bottom: 10px;
+            font-size: 16px; /* Adjust the font size as needed */
+        }
+
+        /* Increase size of the Insert Record button */
+        input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 20px;
+        }
+
+        /* Increase the size of the label and placeholder text */
+        table td label {
+            font-size: 18px; /* Adjust the font size as needed */
+        }
+
+        table td input::placeholder {
+            font-size: 16px; /* Adjust the font size as needed */
+        }
+        table td input, table td select {
+            width: 80%; /* Set the width as needed */
+            padding: 8px; /* Set the padding as needed */
+            box-sizing: border-box;}
+
+
+                 /*--Ankit Added Css--*/
+                 h1 {font-size: 20px;}
+                 h1, h2, h3, h4, h5, h6 {font-family: "Poppins", sans-serif; margin-bottom: 10px; margin-top: 15px;}
+                 .table-responsive { font-family: "Poppins", sans-serif; width: 100%; overflow-x: scroll;}
+                 .table-responsive th, .table-responsive td {
+                   border: 1px solid #eee;  padding: 10px 20px; font-size: 13px; min-width: 100px;
+                 }
+                 .table-responsive tr td form button[type=submit] { font-weight: bold; background-color: #333; font-size: 12px; width: 100px;
+                   text-align: center; color: #fff; padding: 5px 10px; border-radius: 5px;}
+                   .table-responsive table { border:0px;}
+                
+                   .navbar, .header-bar { justify-content: space-between; display: flex;}
+                   .navbar a, .header-bar a { font-weight: 600; font-size: 14px; font-family: "Poppins", sans-serif;}
+                   .navbar { padding: 0;}
+                
+                   .filter-dropdown button, .header-bar button { font-size: 13px; font-weight:600; font-family: "Poppins", sans-serif;}
+                   .filter-dropdown .filter-dropdown-content { top: 44px;}
+                   .filter-dropdown .filter-dropdown-content a { font-size: 13px;}
+    /*--Ankit Added Css--*/
+    table.information tr td:nth-child(1), table.information tr td:nth-child(3) { width: 150px;}
+   table.information tr td { font-family: "Poppins", sans-serif;}
+   table.information tr input { font-family: "Poppins", sans-serif; border:1px solid #999; border-radius:5px;}
+    .btn { background-color: #333; font-size: 13px; color: #fff; border-radius: 5px; padding: 5px 10px;}
+
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="navbar">
+    <a href="{% url 'customer_relationship_management:dashboard' %}">Dashboard</a>
+    <a href="{% url 'customer_relationship_management:lead' %}">Lead</a>
+    <a href="{% url 'customer_relationship_management:billing' %}">Billing</a>
+    <a href="{% url 'customer_relationship_management:deal' %}">Deals</a>
+    <a href="{% url 'customer_relationship_management:client' %}">Accounts</a>
+    <a href="{% url 'customer_relationship_management:contact' %}">Contact</a>
+    <a href="{% url 'customer_relationship_management:selling' %}">Sales Order</a>
+    <a href="{% url 'customer_relationship_management:to_do_list' %}">To Do List</a>
+    <a href="{% url 'customer_relationship_management:logout' %}?next={% url 'customer_relationship_management:login' %}" class="logout">Logout</a>
+</div>
+
+<div class="content">
+    <form method="POST" action="{% url 'customer_relationship_management:Insertrecord' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <h1>Lead Information</h1>
+        <table class="information">
+        <tr>
+          <td> Lead Owner: </td>
+          <td>         <select name="leadowner" required>
+            <option value="arun_agarwal">Arun Agarwal</option>
+            <option value="jashuk_shah">Jashuk Shah</option>
+            <option value="sawan_jain">Sawan Jain</option>
+            <option value="mayank_sarda">Mayank Sarda</option>
+        </select><br/></td>
+            <td>Lead Source: </td>
+              <td>        <select name="leadsource" required>
+                <option value="none">None</option>
+                <option value="social_media">Social Media</option>
+                <option value="bni">BNI</option>
+                <option value="direct_partner">Direct Partner</option>
+                <option value="client_preference">Client Preference</option>
+                <option value="employee_reference">Employee Reference</option>
+                <option value="associate_reference">Associate Reference</option>
+                <option value="others">Others</option>
+    </td>
+        </tr>
+        <tr>
+          <td>   Title:</td>
+          <td> <input type="text" placeholder="Enter Title" name="title" required/><br/></td>
+           <td> Email Opt Out:</td>
+           <td> <input type="text" placeholder="Enter Email Opt Out" name="emailoptout" required/><br/></td>
+        </tr>
+        <tr>
+           <td> First Name:</td>
+           <td> <input type="text" placeholder="Enter First Name" name="firstname" required/><br/></td>
+            <td>Last Name:</td>
+            <td> <input type="text" placeholder="Enter Last Name" name="lastname" required/><br/></td>
+        </tr>
+        <tr>
+            <td>Company:</td>
+            <td> <input type="text" placeholder="Enter Company" name="company" required/><br/></td>
+            <td>Mobile:</td>
+            <td> <input type="text" placeholder="Enter Mobile" name="mobile" required/><br/></td>
+        </tr>
+        <tr>
+           <td> Email:</td>
+           <td> <input type="text" placeholder="Enter Email" name="email" required/><br/></td>
+            <td>Phone:</td>
+            <td> <input type="text" placeholder="Enter Phone" name="phone" required/><br/></td>
+        </tr>
+        <tr>
+           <td> Website: </td>
+           <td><input type="text" placeholder="Enter Website" name="website" required/><br/></td>
+           <td>Industry:</td>
+           <td>
+               <select name="industry" required>
+                   <option value="none">None</option>
+                   <option value="trading">Trading</option>
+                   <option value="manufacturing">Manufacturing</option>
+                   <option value="construction">Construction</option>
+                   <option value="transport">Transport</option>
+                   <option value="it_networks">IT & Networks</option>
+                   <option value="services">Services</option>
+                   <option value="hardware_tools">Hardware & Tools</option>
+                   <option value="chemicals">Chemicals</option>
+                   <option value="jewellery">Jewellery</option>
+                   <option value="utilities">Utilities</option>
+                   <option value="government">Government</option>
+                   <option value="others">Others</option>
+               </select><br/>
+           </td>
+        </tr>
+        <tr>
+           <td> No of emp:</td>
+           <td> <input type="text" placeholder="Enter No of emp" name="noofemp" required/><br/></td>
+           <td> Annual Revenue:</td>
+           <td> <input type="text" placeholder="Enter Annual Revenue" name="annualrevenue" required/><br/></td>
+        </tr>
+        <tr>
+            <td>Currency:</td>
+            <td> <input type="text" placeholder="Enter Currency" name="currency" required/><br/></td>
+           <td> Exchange Rate: </td>
+           <td><input type="text" placeholder="Enter Exchange Rate" name="exchangerate" required/><br/></td>
+        </tr>
+        <tr>
+          <td>Lead Status:</td>
+          <td>
+              <select name="leadstatus" required>
+                  <option value="none">None</option>
+                  <option value="attempted_to_contact">Attempted to Contact</option>
+                  <option value="contact_in_future">Contact in Future</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="junk_lead">Junk Lead</option>
+                  <option value="lost_lead">Lost Lead</option>
+                  <option value="not_contacted">Not Contacted</option>
+                  <option value="pre_qualified">Pre-Qualified</option>
+                  <option value="not_qualified">Not Qualified</option>
+              </select><br/>
+          </td>
+          <td>Rating:</td>
+          <td>
+              <select name="rating" required>
+                  <option value="none">None</option>
+                  <option value="acquired">Acquired</option>
+                  <option value="active">Active</option>
+                  <option value="market_failed">Market Failed</option>
+                  <option value="project_cancelled">Project Cancelled</option>
+                  <option value="shut_down">Shut Down</option>
+              </select><br/>
+          </td>
+      </tr>
+      </table>
+
+
+        <h1>Address Information</h1>
+        <table class="information">
+          <tr>
+            <td> Street: </td>
+            <td><input type="text" placeholder="Enter Street" name="street" required/><br/></td>
+             <td> City:</td>
+             <td> <input type="text" placeholder="Enter City" name="city" required/><br/></td>
+          </tr>
+          <tr>
+             <td> State:</td>
+            <td> <input type="text" placeholder="Enter State" name="state" required/><br/></td>
+            <td>  Zipcode: </td>
+            <td><input type="text" placeholder="Enter Zipcode" name="zipcode" required/><br/></td>
+          </tr>
+          <tr>
+             <td> Country: </td>
+              <td><input type="text" placeholder="Enter Country" name="country" required/><br/></td>
+             </tr>
+             </table>
+        <h1>For-Business Setup Leads</h1>
+        <table class = "information">
+          <tr>
+            <td>Business category:</td>
+            <td> <input type="text" placeholder="Enter Business category" name="businesscategory" required/><br/></td>
+             <td> Description of business activity: </td>
+          <td><input type="text" placeholder="Enter Description of business activity" name="descriptionofbusinessactivity" required/><br/></td>
+          </tr>
+          <tr>
+            <td>Type of Company:</td>
+            <td>
+                <select name="typeofcompany" required>
+                    <option value="none">None</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="service">Service</option>
+                    <option value="trading">Trading</option>
+                </select><br/>
+            </td>
+             <td> No of Visa Required:</td>
+             <td> <input type="text" placeholder="Enter No of Visa Required" name="noofvisarequired" required/><br/></td>
+          </tr>
+          <tr>
+             <td> Type of Share Holder: </td>
+             <td><input type="text" placeholder="Enter Type of Share Holder" name="typeofshareholder" required/><br/></td>
+             <td>Preferred Jurisdiction:</td>
+<td>
+    <select name="preferredjurisdiction" required>
+        <option value="none">None</option>
+        <option value="mainland">Mainland</option>
+        <option value="freezone">Free Zone</option>
+    </select><br/>
+</td>
+             </tr>
+             <tr>
+              <td>Office Space Required:</td>
+              <td>
+                  <select name="officespacerequired" required>
+                      <option value="none">None</option>
+                      <option value="virtual_office">Virtual Office</option>
+                      <option value="business_office">Business Office</option>
+                      <option value="physical_office">Physical Office</option>
+                      <option value="shop">Shop</option>
+                      <option value="warehouse">Warehouse</option>
+                      <option value="no_office">No Office</option>
+                  </select><br/>
+              </td>
+             <td> Remarks:</td>
+             <td> <input type="text" placeholder="Enter Remarks" name="remarks" required/><br/></td>
+             </tr>
+             <tr>
+             <td> Preferred Free Zone? If any?: </td>
+             <td><input type="text" placeholder="Enter Preferred Free Zone? If any?" name="preferredfreezone" required/><br/></td>
+             </tr>
+            </table>
+       <h1>Description Information</h1>
+        <table class = "information">
+          <tr>
+            <td> Description:</td>
+            <td> <input type="text" placeholder="Enter Description" name="description" required/><br/></td>
+          </tr>
+         </table>
+
+        <input class="btn" type="submit" value="Insert Record"/>
+    </form>
+    <hr/>
+</div>
+</body>
+</html>

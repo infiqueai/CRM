@@ -1,0 +1,309 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CREATE SALES ORDER</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Increase the size of the label and placeholder text */
+        table td label {
+            font-size: 40px; /* Adjust the font size as needed */
+        }
+
+        table td input::placeholder {
+            font-size: 16px; /* Adjust the font size as needed */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 14px 16px;
+            font-size: 18px;
+            transition: text-decoration 0.3s;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 100px;
+        }
+
+        /* Updated styles to remove table lines */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-spacing: 0;
+        }
+
+        table, th, td {
+            border: none;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Reduce gap between label and input field */
+        table td input {
+            margin-bottom: 10px;
+        }
+
+        /* Increase size of the Insert Record button */
+        input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 20px;
+        }
+        table td input, table td select {
+            width: 80%; 
+            padding: 8px; 
+            box-sizing: border-box;}
+
+             /*--Ankit Added Css--*/
+             h1 {font-size: 20px;}
+             h1, h2, h3, h4, h5, h6 {font-family: "Poppins", sans-serif; margin-bottom: 10px; margin-top: 15px;}
+             .table-responsive { font-family: "Poppins", sans-serif; width: 100%; overflow-x: scroll;}
+             .table-responsive th, .table-responsive td {
+               border: 1px solid #eee;  padding: 10px 20px; font-size: 13px; min-width: 100px;
+             }
+             .table-responsive tr td form button[type=submit] { font-weight: bold; background-color: #333; font-size: 12px; width: 100px;
+               text-align: center; color: #fff; padding: 5px 10px; border-radius: 5px;}
+               .table-responsive table { border:0px;}
+            
+               .navbar, .header-bar { justify-content: space-between; display: flex;}
+               .navbar a, .header-bar a { font-weight: 600; font-size: 14px; font-family: "Poppins", sans-serif;}
+               .navbar { padding: 0;}
+            
+               .filter-dropdown button, .header-bar button { font-size: 13px; font-weight:600; font-family: "Poppins", sans-serif;}
+               .filter-dropdown .filter-dropdown-content { top: 44px;}
+               .filter-dropdown .filter-dropdown-content a { font-size: 13px;}
+    /*--Ankit Added Css--*/
+    table.information tr td:nth-child(1), table.information tr td:nth-child(3) { width: 150px;}
+   table.information tr td { font-family: "Poppins", sans-serif;}
+   table.information tr input { font-family: "Poppins", sans-serif; border:1px solid #999; border-radius:5px;}
+    .btn { background-color: #333; font-size: 13px; color: #fff; border-radius: 5px; padding: 5px 10px;}
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+<script>
+        function addRow() {
+            var table = document.getElementById("orderedItemsTable");
+            var newRow = table.insertRow(table.rows.length);
+            var cells = [];
+    
+            for (var i = 0; i < 9; i++) {
+                cells[i] = newRow.insertCell(i);
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "item[]";
+                input.required = true;
+                input.oninput = function () {
+                    calculateTotal(newRow);
+                };
+                cells[i].appendChild(input);
+            }
+        }
+
+        function calculateTotal(row) {
+            var quantity = parseFloat(row.cells[2].getElementsByTagName("input")[0].value) || 0;
+            var listedPrice = parseFloat(row.cells[3].getElementsByTagName("input")[0].value) || 0;
+            var amount = quantity * listedPrice;
+
+            var discount = parseFloat(row.cells[5].getElementsByTagName("input")[0].value) || 0;
+            var tax = parseFloat(row.cells[6].getElementsByTagName("input")[0].value) || 0;
+            var total = amount - discount + tax;
+
+            row.cells[4].getElementsByTagName("input")[0].value = amount.toFixed(2);
+            row.cells[7].getElementsByTagName("input")[0].value = total.toFixed(2);
+        }
+</script>
+   
+</head>
+<body>
+<div class="navbar">
+    <a href="{% url 'customer_relationship_management:dashboard' %}">Dashboard</a>
+    <a href="{% url 'customer_relationship_management:lead' %}">Lead</a>
+    <a href="{% url 'customer_relationship_management:billing' %}">Billing</a>
+    <a href="{% url 'customer_relationship_management:deal' %}">Deals</a>
+    <a href="{% url 'customer_relationship_management:client' %}">Accounts</a>
+    <a href="{% url 'customer_relationship_management:contact' %}">Contact</a>
+    <a href="{% url 'customer_relationship_management:selling' %}">Sales Order</a>
+    <a href="{% url 'customer_relationship_management:to_do_list' %}">To Do List</a>
+    <a href="{% url 'customer_relationship_management:logout' %}?next={% url 'customer_relationship_management:login' %}" class="logout">Logout</a>
+</div>
+
+<div class="content">
+  <form method="POST" action="{% url 'customer_relationship_management:Salerecord' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h1>Sales Order Information</h1>
+    <table class="information">
+      <tr>
+        <td>Sales Order Owner: </td>
+        <td>
+            <select name="salesowner" required>
+                <option value="arun_agarwal">Arun Agarwal</option>
+                <option value="jashuk_shah">Jashuk Shah</option>
+                <option value="sawan_jain">Sawan Jain</option>
+                <option value="mayank_sarda">Mayank Sarda</option>
+            </select><br/>
+        </td>
+        <td>Deal Name:</td>
+        <td><input type="text" placeholder="Enter Deal Name" name="dealname" required/><br/></td>
+    </tr>
+      <tr>
+    <td>Subject:</td>
+    <td> <input type="text" placeholder="Enter Subject" name="subject" required/><br/></td>
+    <td>Purchase Order: </td>
+    <td><input type="text" placeholder="Enter Purchase Order" name="purchaseorder" required/><br/></td>
+      </tr>
+      <tr>
+        <td>Customer Number: </td>
+        <td><input type="text" placeholder="Enter Customer Number" name="customernumber" required/><br/></td>
+        <td>Due Date: </td>
+        <td><input type="text" placeholder="Enter Due Date" name="duedate" required/><br/></td>
+    </tr>
+    <tr>
+        <td>Quote Name: </td>
+        <td><input type="text" placeholder="Enter Quote Name" name="quotename" required/><br/></td>
+        <td>Contact Name: </td>
+        <td><input type="text" placeholder="Enter Contact Name" name="contactname" required/><br/></td>
+    </tr>
+    <tr>
+        <td>Pending: </td>
+        <td><input type="text" placeholder="Enter Pending" name="pending" required/><br/></td>
+        <td>Excise Duty: </td>
+        <td><input type="text" placeholder="Enter Excise Duty" name="exciseduty" required/><br/></td>
+    </tr>
+    <tr>
+        <td>Carrier: </td>
+        <td>
+            <select name="carrier" required>
+                <option value="fedex">FedEX</option>
+                <option value="ups">UPS</option>
+                <option value="usps">USPS</option>
+                <option value="dhl">DHL</option>
+                <option value="bluedart">BlueDart</option>
+            </select><br/>
+        </td>
+        <td>Status:</td>
+        <td>
+            <select name="status" required>
+                <option value="created">Created</option>
+                <option value="approved">Approved</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+            </select><br/>
+        </td>
+    </tr>
+    <tr>
+        <td>Sales Commision: </td>
+        <td><input type="text" placeholder="Enter Sales Commision" name="salescommision" required/><br/></td>
+        <td>Exchange Rate: </td>
+        <td><input type="text" placeholder="Enter Exchange Rate" name="exchangerate" required/><br/></td>
+    </tr>
+    <tr>
+        <td>Account Name: </td>
+        <td><input type="text" placeholder="Enter Account Name" name="accountname" required/><br/></td>
+        <td>currency: </td>
+        <td>
+            <select name="currency" required>
+                <option value="aed">AED</option>
+            </select><br/>
+        </td>
+    </tr>
+    </table>
+    <h1>Address Information</h1>
+    <table class="information">
+      <tr>
+    <td>Billing Street: </td>
+    <td><input type="text" placeholder="Enter Billing Street" name="billingstreet" required/><br/></td>
+    <td>Shipping Street:</td>
+    <td> <input type="text" placeholder="Enter Shipping Street" name="shippingstreet" required/><br/></td>
+      </tr>
+      <tr>
+    <td>Billing City: </td>
+    <td><input type="text" placeholder="Enter Billing City" name="billingcity" required/><br/></td>
+   <td> Shipping City: </td>
+   <td><input type="text" placeholder="Enter Shipping City" name="shippingcity" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Billing State:</td>
+   <td> <input type="text" placeholder="Enter Billing State" name="billingstate" required/><br/></td>
+   <td> Shipping State: </td>
+   <td><input type="text" placeholder="Enter Shipping State" name="shippingstate" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Billing Code:</td>
+   <td> <input type="text" placeholder="Enter Billing Code" name="billingcode" required/><br/></td>
+    <td>Shipping Code: </td>
+    <td><input type="text" placeholder="Enter Shipping Code Zip" name="shippingcode" required/><br/></td>
+      </tr>
+      <tr>
+    <td>Billing Country: </td>
+    <td><input type="text" placeholder="Enter Billing Country" name="billingcountry" required/><br/></td>
+    <td>Shipping Country:</td>
+    <td> <input type="text" placeholder="Enter Shipping Country" name="shippingcountry" required/><br/></td>
+      </tr>
+    </table>
+    <h1>Ordered Items</h1>
+    <table id="orderedItemsTable" class="information">
+        <tr>
+          <th>S.no</th>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Listed Price (AED)</th>
+          <th>Amount(AED)</th>
+          <th>Discount(AED)</th>
+          <th>Tax(AED)</th>
+          <th>Total(AED)</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td><input type="text"  name="sno" required/></td>
+          <td><input type="text"  name="productname" required/></td>
+          <td><input type="text"  name="quantity" required/></td>
+          <td><input type="text"  name="listedprice" required/></td>
+          <td><input type="text"  name="amount" required/></td>
+          <td><input type="text"  name="discount" required/></td>
+          <td><input type="text"  name="tax" required/></td>
+          <td><input type="text"  name="total" required/></td>
+          <td><input type="text"  name="description" required/></td>
+        </tr>
+        <!-- You can add more rows for additional items -->
+      </table>
+      <button type="button" class="btn" onclick="addRow()">Add Row</button>
+      <h1>Terms & Conditions</h1>
+      <table class="information">
+        <tr>
+     <td> Terms & Conditions:</td>
+     <td> <input type="text" placeholder="Enter Terms & Conditions" name="termsandconditions" required/><br/></td>
+        </tr>
+      </table>
+
+    <h1>Description Information</h1>
+    <table class="information">
+      <tr>
+   <td> Description:</td>
+   <td> <input type="text" placeholder="Enter Description" name="salesorderdescription" required/><br/></td>
+      </tr>
+    </table>
+    <input class ="btn" type="submit" value="Insert Record"/>
+</form>
+<hr/>
+</body>
+</html>

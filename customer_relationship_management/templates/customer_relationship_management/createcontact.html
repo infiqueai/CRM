@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CREATE CONTACT</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Increase the size of the label and placeholder text */
+        table td label {
+            font-size: 40px; /* Adjust the font size as needed */
+        }
+
+        table td input::placeholder {
+            font-size: 16px; /* Adjust the font size as needed */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 14px 16px;
+            font-size: 18px;
+            transition: text-decoration 0.3s;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 100px;
+        }
+
+        /* Updated styles to remove table lines */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-spacing: 0;
+        }
+
+        table, th, td {
+            border: none;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Reduce gap between label and input field */
+        table td input {
+            margin-bottom: 10px;
+        }
+
+        /* Increase size of the Insert Record button */
+        input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 20px;
+        }
+        table td input, table td select {
+            width: 80%; /* Set the width as needed */
+            padding: 8px; /* Set the padding as needed */
+            box-sizing: border-box;}
+
+
+              /*--Ankit Added Css--*/
+              h1 {font-size: 20px;}
+              h1, h2, h3, h4, h5, h6 {font-family: "Poppins", sans-serif; margin-bottom: 10px; margin-top: 15px;}
+              .table-responsive { font-family: "Poppins", sans-serif; width: 100%; overflow-x: scroll;}
+              .table-responsive th, .table-responsive td {
+                border: 1px solid #eee;  padding: 10px 20px; font-size: 13px; min-width: 100px;
+              }
+              .table-responsive tr td form button[type=submit] { font-weight: bold; background-color: #333; font-size: 12px; width: 100px;
+                text-align: center; color: #fff; padding: 5px 10px; border-radius: 5px;}
+                .table-responsive table { border:0px;}
+             
+                .navbar, .header-bar { justify-content: space-between; display: flex;}
+                .navbar a, .header-bar a { font-weight: 600; font-size: 14px; font-family: "Poppins", sans-serif;}
+                .navbar { padding: 0;}
+             
+                .filter-dropdown button, .header-bar button { font-size: 13px; font-weight:600; font-family: "Poppins", sans-serif;}
+                .filter-dropdown .filter-dropdown-content { top: 44px;}
+                .filter-dropdown .filter-dropdown-content a { font-size: 13px;}
+    /*--Ankit Added Css--*/
+    table.information tr td:nth-child(1), table.information tr td:nth-child(3) { width: 150px;}
+   table.information tr td { font-family: "Poppins", sans-serif;}
+   table.information tr input { font-family: "Poppins", sans-serif; border:1px solid #999; border-radius:5px;}
+    .btn { background-color: #333; font-size: 13px; color: #fff; border-radius: 5px; padding: 5px 10px;}
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="navbar">
+    <a href="{% url 'customer_relationship_management:dashboard' %}">Dashboard</a>
+    <a href="{% url 'customer_relationship_management:lead' %}">Lead</a>
+    <a href="{% url 'customer_relationship_management:billing' %}">Billing</a>
+    <a href="{% url 'customer_relationship_management:deal' %}">Deals</a>
+    <a href="{% url 'customer_relationship_management:client' %}">Accounts</a>
+    <a href="{% url 'customer_relationship_management:contact' %}">Contact</a>
+    <a href="{% url 'customer_relationship_management:selling' %}">Sales Order</a>
+    <a href="{% url 'customer_relationship_management:to_do_list' %}">To Do List</a>
+    <a href="{% url 'customer_relationship_management:logout' %}?next={% url 'customer_relationship_management:login' %}" class="logout">Logout</a>
+</div>
+
+<div class="content">
+  <form method="POST" action="{% url 'customer_relationship_management:Fillrecord' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h1>Contact Information</h1>
+    <table class="information">
+      <tr>
+        <td>Contact Owner: </td>
+        <td>
+            <select name="contactowner" required>
+                <option value="arun_agarwal">Arun Agarwal</option>
+                <option value="jashuk_shah">Jashuk Shah</option>
+                <option value="sawan_jain">Sawan Jain</option>
+                <option value="mayank_sarda">Mayank Sarda</option>
+            </select><br/>
+        </td>
+        <td>Lead Source: </td>
+        <td>
+            <select name="leadsource" required>
+                <option value="none">None</option>
+                <option value="advertisement">Advertisement</option>
+                <option value="cold_call">Cold Call</option>
+                <option value="employee_referral">Employee Referral</option>
+                <option value="external_referral">External Referral</option>
+                <option value="online_store">Online Store</option>
+                <option value="partner">Partner</option>
+                <option value="public_relations">Public Relations</option>
+                <option value="sales_email_alias">Sales Email Alias</option>
+                <option value="seminar_partner">Seminar Partner</option>
+                <option value="internal_seminar">Internal Seminar</option>
+                <option value="trade_show">Trade Show</option>
+                <option value="web_download">Web Download</option>
+                <option value="web_research">Web Research</option>
+                <option value="web_cases">Web Cases</option>
+                <option value="web_mail">Web Mail</option>
+                <option value="client">Client</option>
+                <option value="twitter">Twitter</option>
+                <option value="facebook">Facebook</option>
+                <option value="google_plus">Google+</option>
+            </select><br/>
+        </td>
+    </tr>
+      <tr>
+   <td> First Name: </td>
+   <td><input type="text" placeholder="Enter First Name" name="firstname" required/><br/></td>
+    <td>Last Name:</td>
+    <td> <input type="text" placeholder="Enter Last Name" name="lastname" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Account Name: </td>
+   <td><input type="text" placeholder="Enter Account Name" name="accountname" required/><br/></td>
+   <td> Vendor Name: </td>
+   <td><input type="text" placeholder="Enter Vendor Name" name="vendorname" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Email: </td>
+   <td><input type="text" placeholder="Enter Email" name="email" required/><br/></td>
+    <td>Title:</td>
+    <td> <input type="text" placeholder="Enter Title" name="title" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Phone:</td>
+   <td> <input type="text" placeholder="Enter Phone" name="phone" required/><br/></td>
+   <td> Department: </td>
+   <td><input type="text" placeholder="Enter Department" name="department" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Other Phone: </td>
+   <td><input type="text" placeholder="Enter Other Phone" name="otherphone" required/><br/></td>
+    <td>Home Phone:</td>
+    <td> <input type="text" placeholder="Enter Home Phone" name="homephone" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Mobile:</td>
+   <td> <input type="text" placeholder="Enter Mobile" name="mobile" required/><br/></td>
+    <td>Fax:</td>
+  <td> <input type="text" placeholder="Enter Fax" name="fax" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Assitant: </td>
+   <td><input type="text" placeholder="Enter Assitant" name="assitant" required/><br/></td>
+    <td>Date of Birth: </td>
+    <td><input type="text" placeholder="Enter Date of Birth" name="dateofbirth" required/><br/></td>
+      </tr>
+      <tr>
+    <td>Asst Phone: </td>
+    <td><input type="text" placeholder="Enter Asst Phone" name="asstphone" required/><br/></td>
+   <td> Email Opt Out:</td>
+   <td> <input type="text" placeholder="Enter Email Opt Out" name="emailoptout" required/><br/></td>
+      </tr>
+      <tr>
+    <td>Skype ID:</td>
+    <td> <input type="text" placeholder="Enter Skype ID" name="skypeid" required/><br/></td>
+    <td>Secondar Email: </td>
+    <td><input type="text" placeholder="Enter Secondar Email" name="secondaryemail" required/><br/></td>
+      </tr>
+      <tr>
+    <td>Twitter: </td>
+    <td><input type="text" placeholder="Enter Twitter" name="twitter" required/><br/></td>
+    <td>Reporting to: </td>
+    <td><input type="text" placeholder="Enter Reporting to" name="reportingto" required/><br/></td>
+      </tr>
+    </table>
+    <h1>Address Information</h1>
+    <table class="information">
+      <tr>
+    <td>Mailing Street: </td>
+    <td><input type="text" placeholder="Enter Mailing Street" name="mailingstreet" required/><br/></td>
+    <td>Mailing City: </td>
+    <td><input type="text" placeholder="Enter Mailing City" name="mailingcity" required/><br/></td>
+      </tr>
+      <tr>
+   <td> Mailing State: </td>
+   <td><input type="text" placeholder="Enter Mailing State" name="mailingstate" required/><br/></td>
+   <td> Mailing Zip: </td>
+   <td><input type="text" placeholder="Enter Mailing Zip" name="mailingzip" required/><br/></td>
+      </tr>
+      <tr>
+    <td>Mailing Country:</td>
+    <td> <input type="text" placeholder="Enter Mailing Country" name="mailingcountry" required/><br/></td>
+    <td>Other Street:</td> 
+    <td> <input type="text" placeholder="Enter Other Street" name="otherstreet" required/><br/> </td>
+      </tr>
+      <tr>
+    <td>Other City:</td>
+    <td> <input type="text" placeholder="Enter Other City" name="othercity" required/><br/></td>
+   <td> Other State: </td>
+   <td><input type="text" placeholder="Enter Other State" name="otherstate" required/><br/></td>
+      </tr>
+      <tr>
+    <td>Other Zip:</td>
+    <td> <input type="text" placeholder="Enter Other Zip" name="otherzip" required/><br/></td>
+   <td> Other Country:</td>
+   <td> <input type="text" placeholder="Enter Other Country" name="othercountry" required/><br/></td>
+      </tr>
+    </table>
+   <h1>Description Information</h1>
+   <table class="information">
+    <tr>
+   <td> Description Information: </td>
+   <td><input type="text" placeholder="Enter Description Information" name="descriptioninformation" required/><br/></td>
+    </tr>
+  </table>
+    
+    <input class="btn" type="submit" value="Insert Record"/>
+</form>
+<hr/>
+</body>
+</html>

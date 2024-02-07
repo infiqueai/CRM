@@ -1,0 +1,297 @@
+{% load static %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>CREATE ACCOUNT</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+            /* Increase the size of the label and placeholder text */
+            table td label {
+                font-size: 40px; /* Adjust the font size as needed */
+            }
+    
+            table td input::placeholder {
+                font-size: 16px; /* Adjust the font size as needed */
+            }
+    
+            .navbar {
+                display: flex;
+                align-items: center;
+                background-color: black;
+                color: white;
+            }
+    
+            .navbar a {
+                text-decoration: none;
+                color: white;
+                padding: 14px 16px;
+                font-size: 18px;
+                transition: text-decoration 0.3s;
+            }
+    
+            .navbar a:hover {
+                text-decoration: underline;
+            }
+    
+            .content {
+                padding: 100px;
+            }
+    
+            /* Updated styles to remove table lines */
+            table {
+                width: 100%;
+                margin-top: 20px;
+                border-spacing: 0;
+            }
+    
+            table, th, td {
+                border: none;
+            }
+    
+            th, td {
+                padding: 10px;
+                text-align: left;
+            }
+    
+            /* Reduce gap between label and input field */
+            table td input {
+                margin-bottom: 10px;
+            }
+    
+            /* Increase size of the Insert Record button */
+            input[type="submit"] {
+                padding: 12px 20px;
+                font-size: 20px;
+            }
+            table td input, table td select {
+                width: 80%; /* Set the width as needed */
+                padding: 8px; /* Set the padding as needed */
+                box-sizing: border-box;}
+
+                 /*--Ankit Added Css--*/
+                 h1 {font-size: 20px;}
+                 h1, h2, h3, h4, h5, h6 {font-family: "Poppins", sans-serif; margin-bottom: 10px; margin-top: 15px;}
+                 .table-responsive { font-family: "Poppins", sans-serif; width: 100%; overflow-x: scroll;}
+                 .table-responsive th, .table-responsive td {
+                   border: 1px solid #eee;  padding: 10px 20px; font-size: 13px; min-width: 100px;
+                 }
+                 .table-responsive tr td form button[type=submit] { font-weight: bold; background-color: #333; font-size: 12px; width: 100px;
+                   text-align: center; color: #fff; padding: 5px 10px; border-radius: 5px;}
+                   .table-responsive table { border:0px;}
+                
+                   .navbar, .header-bar { justify-content: space-between; display: flex;}
+                   .navbar a, .header-bar a { font-weight: 600; font-size: 14px; font-family: "Poppins", sans-serif;}
+                   .navbar { padding: 0;}
+                
+                   .filter-dropdown button, .header-bar button { font-size: 13px; font-weight:600; font-family: "Poppins", sans-serif;}
+                   .filter-dropdown .filter-dropdown-content { top: 44px;}
+                   .filter-dropdown .filter-dropdown-content a { font-size: 13px;}
+    /*--Ankit Added Css--*/
+    table.information tr td:nth-child(1), table.information tr td:nth-child(3) { width: 150px;}
+   table.information tr td { font-family: "Poppins", sans-serif;}
+   table.information tr input { font-family: "Poppins", sans-serif; border:1px solid #999; border-radius:5px;}
+    .btn { background-color: #333; font-size: 13px; color: #fff; border-radius: 5px; padding: 5px 10px;}
+        </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+    <div class="navbar">
+        <a href="{% url 'customer_relationship_management:dashboard' %}">Dashboard</a>
+        <a href="{% url 'customer_relationship_management:lead' %}">Lead</a>
+        <a href="{% url 'customer_relationship_management:billing' %}">Billing</a>
+        <a href="{% url 'customer_relationship_management:deal' %}">Deals</a>
+        <a href="{% url 'customer_relationship_management:client' %}">Accounts</a>
+        <a href="{% url 'customer_relationship_management:contact' %}">Contact</a>
+        <a href="{% url 'customer_relationship_management:selling' %}">Sales Order</a>
+        <a href="{% url 'customer_relationship_management:to_do_list' %}">To Do List</a>
+        <a href="{% url 'customer_relationship_management:logout' %}?next={% url 'customer_relationship_management:login' %}" class="logout">Logout</a>
+    </div>
+    
+    <div class="content">
+      <form method="POST" action="{% url 'customer_relationship_management:Accrecord' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <h1>Account Information</h1>
+        <table class="information">
+          <tr>
+            <td> Account Owner: </td>
+            <td>
+                <select name="accountowner" required>
+                    <option value="arun_agarwal">Arun Agarwal</option>
+                    <option value="jashuk_shah">Jashuk Shah</option>
+                    <option value="sawan_jain">Sawan Jain</option>
+                    <option value="mayank_sarda">Mayank Sarda</option>
+                </select><br/>
+            </td>
+            <td> Rating:</td>
+            <td>
+                <select name="rating" required>
+                    <option value="none">None</option>
+                    <option value="acquired">Acquired</option>
+                    <option value="active">Active</option>
+                    <option value="market_failed">Market Failed</option>
+                    <option value="project_cancelled">Project Cancelled</option>
+                    <option value="shut_down">Shut Down</option>
+                </select><br/>
+            </td>
+        </tr>
+          <tr>
+        <td>Account Name: </td>
+        <td><input type="text" placeholder="Enter Account Name" name="accountname" required/><br/></td>
+       <td> Phone: </td>
+       <td><input type="text" placeholder="Enter Phone" name="phone" required/><br/></td>
+          </tr>
+          <tr>
+       <td> Account Site:</td>
+       <td> <input type="text" placeholder="Enter Account Site" name="accountsite" required/><br/></td>
+        <td>Fax:</td> 
+        <td><input type="text" placeholder="Enter Fax" name="fax" required/><br/></td>
+          </tr>
+          <tr>
+       <td> Parent Account:</td>
+       <td> <input type="text" placeholder="Enter Parent Account" name="parentaccount" required/><br/></td>
+       <td> Website:</td>
+       <td> <input type="text" placeholder="Enter Website" name="website" required/><br/></td>
+          </tr>
+          <tr>
+       <td> Account Number:</td>
+       <td> <input type="text" placeholder="Enter Account Number" name="accountnumber" required/><br/></td>
+        <td>Ticker Symbol:</td>
+        <td> <input type="text" placeholder="Enter Ticker Symbol" name="tickersymbol" required/><br/></td>
+          </tr>
+          <tr>
+            <td> Account Type: </td>
+            <td>
+                <select name="accounttype" required>
+                    <option value="none">None</option>
+                    <option value="competitor">Competitor</option>
+                    <option value="customer">Customer</option>
+                    <option value="distributor">Distributor</option>
+                    <option value="integrator">Integrator</option>
+                    <option value="investor">Investor</option>
+                    <option value="other">Other</option>
+                    <option value="partner">Partner</option>
+                    <option value="press">Press</option>
+                    <option value="prospect">Prospect</option>
+                    <option value="reseller">Reseller</option>
+                    <option value="supplier">Supplier</option>
+                    <option value="vendor">Vendor</option>
+                </select><br/>
+            </td>
+            <td> Owner Ship: </td>
+            <td>
+                <select name="ownership" required>
+                    <option value="none">None</option>
+                    <option value="other">Other</option>
+                    <option value="private">Private</option>
+                    <option value="public">Public</option>
+                    <option value="subsidiary">Subsidiary</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="government">Government</option>
+                    <option value="privately_held">Privately Held</option>
+                    <option value="public_company">Public Company</option>
+                </select><br/>
+            </td>
+        </tr>
+        <tr>
+          <td> Industry:</td>
+          <td>
+              <select name="industry" required>
+                  <option value="none">None</option>
+                  <option value="ASP">ASP (Application Service Provider)</option>
+                  <option value="data_telecom_OEM">Data/Telecom OEM</option>
+                  <option value="ERP">ERP (Enterprise Resource Planning)</option>
+                  <option value="government_military">Government/Military</option>
+                  <option value="large_enterprise">Large Enterprise</option>
+                  <option value="management_ISV">Management ISV</option>
+                  <option value="MSP">MSP (Management Service Provider)</option>
+                  <option value="network_equipment_enterprise">Network Equipment Enterprise</option>
+                  <option value="non_management_ISV">Non-Management ISV</option>
+                  <option value="optical_networking">Optical Networking</option>
+                  <option value="service_provider">Service Provider</option>
+                  <option value="small_medium_enterprise">Small/Medium Enterprise</option>
+                  <option value="storage_equipment">Storage Equipment</option>
+                  <option value="storage_service_provider">Storage Service Provider</option>
+                  <option value="system_integrator">System Integrator</option>
+                  <option value="wireless_industry">Wireless Industry</option>
+                  <option value="financial_services">Financial Services</option>
+                  <option value="education">Education</option>
+                  <option value="technology">Technology</option>
+                  <option value="real_estate">Real Estate</option>
+                  <option value="consulting">Consulting</option>
+                  <option value="communications">Communications</option>
+                  <option value="manufacturing">Manufacturing</option>
+              </select><br/>
+          </td>
+          <td> Employees:</td>
+          <td> <input type="text" placeholder="Enter Employees" name="employees" required/><br/></td>
+      </tr>
+          <tr>
+       <td> Annual Revenue:</td>
+       <td> <input type="text" placeholder="Enter Annual Revenue" name="annualrevenue" required/><br/></td>
+        <td>SIC Code:</td>
+        <td> <input type="text" placeholder="Enter SIC Code" name="siccode" required/><br/></td>
+          </tr>
+          <tr>
+            <td>Exchange Rate:</td>
+            <td> <input type="text" placeholder="Enter Exchange Rate" name="exchangerate" required/><br/></td>
+            <td>Currency:</td>
+            <td>
+                <select name="currency" required>
+                    <option value="AED">AED</option>
+                </select><br/>
+            </td>
+        </tr>
+        </table>
+    
+        <h1>Address Information</h1>
+        <table class="information">
+          <tr>
+        <td>Billing Street: </td>
+        <td><input type="text" placeholder="Enter Billing Street" name="billingstreet" required/><br/></td>
+        <td>Shipping Street:</td>
+        <td> <input type="text" placeholder="Enter Shipping Street" name="shippingstreet" required/><br/></td>
+          </tr>
+          <tr>
+        <td>Billing City: </td>
+        <td><input type="text" placeholder="Enter Billing City" name="billingcity" required/><br/></td>
+       <td> Shipping City: </td>
+       <td><input type="text" placeholder="Enter Shipping City" name="shippingcity" required/><br/></td>
+          </tr>
+          <tr>
+       <td> Billing State:</td>
+       <td> <input type="text" placeholder="Enter Billing State" name="billingstate" required/><br/></td>
+       <td> Shipping State: </td>
+       <td><input type="text" placeholder="Enter Shipping State" name="shippingstate" required/><br/></td>
+          </tr>
+          <tr>
+       <td> Billing Code:</td>
+       <td> <input type="text" placeholder="Enter Billing Code" name="billingcode" required/><br/></td>
+        <td>Shipping Code: </td>
+        <td><input type="text" placeholder="Enter Shipping Code Zip" name="shippingcode" required/><br/></td>
+          </tr>
+          <tr>
+        <td>Billing Country: </td>
+        <td><input type="text" placeholder="Enter Billing Country" name="billingcountry" required/><br/></td>
+        <td>Shipping Country:</td>
+        <td> <input type="text" placeholder="Enter Shipping Country" name="shippingcountry" required/><br/></td>
+          </tr>
+        </table>
+    
+        <h1>Description Information</h1>
+        <table class = "information">
+          <tr>
+    <td> Description:</td>
+    <td> <input type="text" placeholder="Enter Description" name="description" required/><br/></td>
+          </tr>
+        </table>
+        <input class="btn"type="submit" value="Insert Record"/>
+</form>
+<hr/>
+</body>
+</html>

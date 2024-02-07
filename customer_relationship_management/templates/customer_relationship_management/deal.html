@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .navbar .logout {
+      float: right;
+    }
+
+    .navbar, .header-bar {
+      display: flex;
+      align-items: center;
+      background-color: black;
+      color: white;
+    }
+
+    .navbar a, .header-bar a {
+      text-decoration: none;
+      color: white;
+      padding: 14px 16px;
+      font-size: 18px;
+      transition: text-decoration 0.3s;
+    }
+
+    .navbar a:hover, .header-bar a:hover {
+      text-decoration: underline;
+    }
+
+    .filter-dropdown {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .filter-button, .create-button {
+      background-color: white;
+      color: black;
+      padding: 12px 16px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      border-radius: 2px;
+      margin-right: 16px;
+    }
+
+    .filter-dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      top: 60px; /* Adjust based on the filter button height */
+    }
+
+    .filter-dropdown:hover .filter-dropdown-content {
+      display: block;
+    }
+
+    .filter-dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .filter-dropdown-content a:hover {
+      background-color: #f9f9f9;
+    }
+
+    .create-button {
+      margin-left: auto; /* Push the create button to the right */
+      background-color: #4CAF50;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    .create-button:hover {
+      background-color: #45a049;
+    }
+
+    .header-bar {
+      background-color: #ddd; /* Grey background for the header bar */
+      padding: 10px 0; /* Adjust the padding as needed for the gap */
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+     /*--Ankit Added Css--*/
+     h1 {font-size: 20px;}
+ h1, h2, h3, h4, h5, h6 {font-family: "Poppins", sans-serif; margin-bottom: 10px; margin-top: 15px;}
+ .table-responsive { font-family: "Poppins", sans-serif; width: 100%; overflow-x: scroll;}
+ .table-responsive th, .table-responsive td {
+   border: 1px solid #eee;  padding: 10px 20px; font-size: 13px; min-width: 100px;
+ }
+ .table-responsive tr td form button[type=submit] { font-weight: bold; background-color: #333; font-size: 12px; width: 100px;
+   text-align: center; color: #fff; padding: 5px 10px; border-radius: 5px;}
+   .table-responsive table { border:0px;}
+
+   .navbar, .header-bar { justify-content: space-between; display: flex;}
+   .navbar a, .header-bar a { font-weight: 600; font-size: 14px; font-family: "Poppins", sans-serif;}
+   .navbar { padding: 0;}
+
+   .filter-dropdown button, .header-bar button { font-size: 13px; font-weight:600; font-family: "Poppins", sans-serif;}
+   .filter-dropdown .filter-dropdown-content { top: 44px;}
+   .filter-dropdown .filter-dropdown-content a { font-size: 13px;}
+   .header-bar { padding: 10px 17px;}
+   
+ /*--Ankit Added Css--*/
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <title>CreateDeal</title>
+  <script>
+    function redirectToCreatedealPage() {
+      window.location.href = "{% url 'customer_relationship_management:createdeal' %}";
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="{% url 'customer_relationship_management:dashboard' %}">Dashboard</a>
+    <a href="{% url 'customer_relationship_management:lead' %}">Lead</a>
+    <a href="{% url 'customer_relationship_management:billing' %}">Billing</a>
+    <a href="{% url 'customer_relationship_management:deal' %}">Deals</a>
+    <a href="{% url 'customer_relationship_management:client' %}">Accounts</a>
+    <a href="{% url 'customer_relationship_management:contact' %}">Contact</a>
+    <a href="{% url 'customer_relationship_management:selling' %}">Sales Order</a>
+    <a href="{% url 'customer_relationship_management:to_do_list' %}">To Do List</a>
+    <a href="{% url 'customer_relationship_management:logout' %}?next={% url 'customer_relationship_management:login' %}" class="logout">Logout</a>
+  </div>
+
+  <!-- Header bar with Filter dropdown and Create button -->
+  <div class="header-bar">
+    <!-- Filter dropdown -->
+    <div class="filter-dropdown">
+      <button class="filter-button">Filter &#9662;</button>
+      <div class="filter-dropdown-content">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+        <a href="#">Option 3</a>
+        <!-- Add more options as needed -->
+      </div>
+    </div>
+
+    <!-- Create button -->
+    <button class="create-button" onclick="redirectToCreatedealPage()">Create</button>
+  </div>
+
+  <!-- Content section to display deals -->
+  <div class="content">
+    <h2>Deal Page</h2>
+    <div class="table-responsive">
+      <table border="2">
+          <tr>
+            <th>Deal Owner</th>
+            <th>Amount</th>
+            <th>Deal Name</th>
+            <th>Closing Date</th>
+            <th>Account Name</th>
+            <th>Pipeline</th>
+            <th>Type</th>
+            <th>Stage</th>
+            <th>Next Step</th>
+            <th>Probability</th>
+            <th>Lead Source</th>
+            <th>Expected Revenue</th>
+            <th>Contact Name</th>
+            <th>Campaign Source</th>
+            <th>Project Delivered</th>
+            <th>Proposal Confirmed</th>
+            <th>Close Lost Date</th>
+            <th>Exchange Rate</th>
+            <th>Currency</th>
+            <th>Enquiry Date</th>
+            <th>Geography of Operations</th>
+            <th>Business Activity</th>
+            <th>Number of Offices</th>
+            <th>Turnover</th>
+            <th>Number of Employees</th>
+            <th>Number of Customers</th>
+            <th>Meeting Date</th>
+            <th>Services Looking For</th>
+            <th>Meeting Status</th>
+            <th>Reason For Delayed</th>
+            <th>Proposal Sent Date</th>
+            <th>First Follow Up Date</th>
+            <th>Second Follow Up Date</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for deal in deals %}
+            <tr>
+              <td>{{ deal.dealowner }}</td>
+              <td>{{ deal.amount }}</td>
+              <td>{{ deal.dealname }}</td>
+              <td>{{ deal.closingdate }}</td>
+              <td>{{ deal.accountname }}</td>
+              <td>{{ deal.pipeline }}</td>
+              <td>{{ deal.type }}</td>
+              <td>{{ deal.stage }}</td>
+              <td>{{ deal.nextstep }}</td>
+              <td>{{ deal.probability }}</td>
+              <td>{{ deal.leadsource }}</td>
+              <td>{{ deal.expectedrevenue }}</td>
+              <td>{{ deal.contactname }}</td>
+              <td>{{ deal.campaignsource }}</td>
+              <td>{{ deal.projectdelivered }}</td>
+              <td>{{ deal.proposalconfirmed }}</td>
+              <td>{{ deal.closelostdate }}</td>
+              <td>{{ deal.exchangerate }}</td>
+              <td>{{ deal.currency }}</td>
+              <td>{{ deal.enquirydate }}</td>
+              <td>{{ deal.geographyofoperations }}</td>
+              <td>{{ deal.businessactivity }}</td>
+              <td>{{ deal.numberofoffices }}</td>
+              <td>{{ deal.turnover}}</td>
+              <td>{{ deal.numberofemployees }}</td>
+              <td>{{ deal.numberofcustomers }}</td>
+              <td>{{ deal.meetingdate }}</td>
+              <td>{{ deal.serviceslookingfor }}</td>
+              <td>{{ deal.meetingstatus }}</td>
+              <td>{{ deal.reasonfordelayed }}</td>
+              <td>{{ deal.proposalsentdate }}</td>
+              <td>{{ deal.firstfollowupdate}}</td>
+              <td>{{ deal.secondfollowupdate }}</td>
+              <td>{{ deal.description}}</td>
+              <td>
+                <form action="/dealtobilling/{{ deal.id }}/" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="dealId" value="{{ deal.id }}">
+                    <button type="submit">Do Billing</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Include Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CREATE TASK</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Increase the size of the label and placeholder text */
+        table td label {
+            font-size: 40px; /* Adjust the font size as needed */
+        }
+
+        table td input::placeholder {
+            font-size: 16px; /* Adjust the font size as needed */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 14px 16px;
+            font-size: 18px;
+            transition: text-decoration 0.3s;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 100px;
+        }
+
+        /* Updated styles to remove table lines */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-spacing: 0;
+        }
+
+        table, th, td {
+            border: none;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Reduce gap between label and input field */
+        table td input {
+            margin-bottom: 10px;
+        }
+
+        /* Increase size of the Insert Record button */
+        input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 20px;
+        }
+        table td input, table td select {
+            width: 80%; /* Set the width as needed */
+            padding: 8px; /* Set the padding as needed */
+            box-sizing: border-box;}
+
+             /*--Ankit Added Css--*/
+             h1 {font-size: 20px;}
+             h1, h2, h3, h4, h5, h6 {font-family: "Poppins", sans-serif; margin-bottom: 10px; margin-top: 15px;}
+             .table-responsive { font-family: "Poppins", sans-serif; width: 100%; overflow-x: scroll;}
+             .table-responsive th, .table-responsive td {
+               border: 1px solid #eee;  padding: 10px 20px; font-size: 13px; min-width: 100px;
+             }
+             .table-responsive tr td form button[type=submit] { font-weight: bold; background-color: #333; font-size: 12px; width: 100px;
+               text-align: center; color: #fff; padding: 5px 10px; border-radius: 5px;}
+               .table-responsive table { border:0px;}
+            
+               .navbar, .header-bar { justify-content: space-between; display: flex;}
+               .navbar a, .header-bar a { font-weight: 600; font-size: 14px; font-family: "Poppins", sans-serif;}
+               .navbar { padding: 0;}
+            
+               .filter-dropdown button, .header-bar button { font-size: 13px; font-weight:600; font-family: "Poppins", sans-serif;}
+               .filter-dropdown .filter-dropdown-content { top: 44px;}
+               .filter-dropdown .filter-dropdown-content a { font-size: 13px;}
+    /*--Ankit Added Css--*/
+    table.information tr td:nth-child(1), table.information tr td:nth-child(3) { width: 150px;}
+   table.information tr td { font-family: "Poppins", sans-serif;}
+   table.information tr input { font-family: "Poppins", sans-serif; border:1px solid #999; border-radius:5px;}
+    .btn { background-color: #333; font-size: 13px; color: #fff; border-radius: 5px; padding: 5px 10px;}
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="navbar">
+    <a href="{% url 'customer_relationship_management:dashboard' %}">Dashboard</a>
+    <a href="{% url 'customer_relationship_management:lead' %}">Lead</a>
+    <a href="{% url 'customer_relationship_management:billing' %}">Billing</a>
+    <a href="{% url 'customer_relationship_management:deal' %}">Deals</a>
+    <a href="{% url 'customer_relationship_management:client' %}">Accounts</a>
+    <a href="{% url 'customer_relationship_management:contact' %}">Contact</a>
+    <a href="{% url 'customer_relationship_management:selling' %}">Sales Order</a>
+    <a href="{% url 'customer_relationship_management:to_do_list' %}">To Do List</a>
+    <a href="{% url 'customer_relationship_management:logout' %}?next={% url 'customer_relationship_management:login' %}" class="logout">Logout</a>
+</div>
+
+<div class="content">
+  <form method="POST" action="{% url 'customer_relationship_management:Taskrecord' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h1>Task Information</h1>
+    <table class="information">
+      <tr>
+        <td>Task Owner: </td>
+        <td>
+            <select name="taskowner" required>
+                <option value="arun_agarwal">Arun Agarwal</option>
+                <option value="jashuk_shah">Jashuk Shah</option>
+                <option value="sawan_jain">Sawan Jain</option>
+                <option value="mayank_sarda">Mayank Sarda</option>
+            </select><br/>
+        </td>
+        <td>Subject:</td>
+        <td><input type="text" placeholder="Enter Subject" name="subject" required/><br/></td>
+    </tr>
+      <tr>
+    <td>Due Date:</td>
+    <td> <input type="text" placeholder="Enter Due Date" name="duedate" required/><br/></td>
+    <td>Choose: </td>
+    <td><input type="text" placeholder="Enter Choose" name="choose" required/><br/></td>
+      </tr>
+      <tr>
+        <td>Status: </td>
+        <td>
+            <select name="status" required>
+                <option value="not_started">Not Started</option>
+                <option value="deferred">Deferred</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="waiting_for_input">Waiting For Input</option>
+            </select><br/>
+        </td>
+        <td>Priority: </td>
+        <td>
+            <select name="priority" required>
+                <option value="high">High</option>
+                <option value="highest">Highest</option>
+                <option value="low">Low</option>
+                <option value="lowest">Lowest</option>
+                <option value="normal">Normal</option>
+            </select><br/>
+        </td>
+    </tr>
+    </table>
+    <h1>Description Information</h1>
+    <table class="information">
+      <tr>
+   <td> Description:</td>
+   <td> <input type="text" placeholder="Enter Description" name="description" required/><br/></td>
+      </tr>
+    </table>
+    <input class="btn" type="submit" value="Insert Record"/>
+</form>
+<hr/>
+</body>
+</html>
